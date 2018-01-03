@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-
-import logo from './logo.svg';
-
 import './App.css';
+
+import io from 'socket.io-client';
 
 class App extends Component {
   state = {
@@ -13,6 +12,13 @@ class App extends Component {
     this.callApi()
       .then(res => this.setState({ response: res.express }))
       .catch(err => console.log(err));
+
+    this.socket = io('http://localhost:5000')
+    this.socket.on('connect', this.connect)
+  }
+
+  connect() {
+  // need to connect to server
   }
 
   callApi = async () => {
@@ -28,7 +34,6 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React!!!</h1>
         </header>
         <p className="App-intro">{this.state.response}</p>
